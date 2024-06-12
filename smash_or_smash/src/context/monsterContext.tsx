@@ -14,14 +14,18 @@ import { QuestionList } from '@/types/questionList';
 interface monsterContextProps {
     monsters: Monster[],
     playerMonster: Monster | null,
+    setPlayerMonster: (playerMonster: Monster)=>void;
     rivalMonster: Monster | null,
+    setRivalMonster: (rivalMonster: Monster)=>void;
     questionList: QuestionList | null,
 }
 
 const MonsterContext = createContext<monsterContextProps>({
     monsters: [],
     playerMonster: null,
+    setPlayerMonster: ()=> null,
     rivalMonster: null,
+    setRivalMonster: ()=>null,
     questionList: null,
 })
 
@@ -56,19 +60,20 @@ export function MonsterContextProvider({children}: {children: ReactNode}){
         .then(response => response.json()) //this runs the promise and sets the data only once we recieve it
         .then(json => setMonster(json.monster))
         .catch(error => console.error(error));
-
     }
 
-    useEffect(()=>{
-        console.log("Use effect for question list monster")
-        //console.log(monsters);
-        fetch('/api/getQuestion')
-        .then(response => response.json()) //this runs the promise and sets the data only once we recieve it
-        .then(json => setQuestionList(json.questionList))
-        .catch(error => console.error(error));
 
-        // getMonsters(monstersCount).then((r)=>setMonsters(r));
-    },[])
+
+    // useEffect(()=>{
+    //     console.log("Use effect for question list monster")
+    //     //console.log(monsters);
+    //     fetch('/api/getQuestion')
+    //     .then(response => response.json()) //this runs the promise and sets the data only once we recieve it
+    //     .then(json => setQuestionList(json.questionList))
+    //     .catch(error => console.error(error));
+
+    //     // getMonsters(monstersCount).then((r)=>setMonsters(r));
+    // },[])
 
 //coming back with API handler should not return a value
     // useEffect(()=>{
@@ -81,7 +86,7 @@ export function MonsterContextProvider({children}: {children: ReactNode}){
     // },[])
 
     return (
-        <MonsterContext.Provider value={{monsters: monsters, playerMonster: playerMonster, rivalMonster: rivalMonster, questionList: questionList }}>
+        <MonsterContext.Provider value={{monsters: monsters, playerMonster: playerMonster, rivalMonster: rivalMonster, questionList: questionList, setPlayerMonster: setPlayerMonster, setRivalMonster: setRivalMonster}}>
             {children}
         </MonsterContext.Provider>
     )

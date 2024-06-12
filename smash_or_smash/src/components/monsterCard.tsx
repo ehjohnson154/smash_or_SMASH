@@ -23,8 +23,8 @@ export default function MonsterCard(props: { monsterDetail: Monster }) { // ques
 
     return (
         <MonsterContextProvider>
-       <Container sx={{width: 500, height: 800, m: 2}}>
-            <Card sx={{maxWidth: 500}}>
+       <Container sx={{ padding: 10}}>
+            <Card sx={{backgroundColor: 'tan', maxWidth: 500}}>
                 <CardMedia
                 component="img"
                 sx={{ width: 151, p: 2, justifyContent: 'center', display: 'flex' }}
@@ -47,34 +47,6 @@ export default function MonsterCard(props: { monsterDetail: Monster }) { // ques
                         </Box>
                     </CardContent>
                 </Box>
-                <Box alignItems="center" sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', textAlign: 'center'}}>
-                {/* {
-                    questionList.map((question, i) => (
-                        <Typography variant="h4" key={i}>
-                            {question.toString()}
-                        </Typography>
-                    )) //change from {} to (), for anonymous use effect uses {}, components uses ()
-                } */}
-                {questionList?
-                <div>
-                                <Typography> {questionList.question1}</Typography>
-                                <RandomDiscreteSlider/>
-                                <Typography> Question 2</Typography>
-                                <RandomDiscreteSlider/>
-                                <Typography> Question 3</Typography>
-                                <RandomDiscreteSlider/>
-                                <Typography> Question 4</Typography>
-                                <RandomDiscreteSlider/>
-                                <Typography> Question 5</Typography>
-                                <RandomDiscreteSlider/> 
-                                </div>
-                                : <div></div>
-
-                }
-
-
-                {/* <Typography>{questionList.toString()}</Typography> */}
-                </Box>
             </Card>
         </Container>
 
@@ -82,27 +54,3 @@ export default function MonsterCard(props: { monsterDetail: Monster }) { // ques
     )
 }
 
-
-
-function RandomDiscreteSlider() {
-    return (
-        <Box sx={{ width: 300, display: 'flex', justifyContent: 'center'}}>
-            <Slider
-                aria-label="Temperature"
-                defaultValue={getRandomInt(10)}
-                //   getAriaValueText={valuetext}
-                valueLabelDisplay="auto"
-                disabled
-                shiftStep={10}
-                step={1}
-                marks
-                min={1}
-                max={10}
-            />
-        </Box>
-    );
-}
-
-function getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-  }
