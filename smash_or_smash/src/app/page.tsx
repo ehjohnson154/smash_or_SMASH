@@ -2,8 +2,10 @@
 
 
 import MonsterCard from "@/components/monsterCard";
+import MonsterCreator from "@/components/monsterCreator";
 import { useMonsterContext } from "@/context/monsterContext";
 import { useEffect } from "react";
+import MainPage from "@/components/mainPage";
 
 
 
@@ -18,14 +20,7 @@ export default function Home() {
 
   return (
     <main>
-      <div>hello world</div>
-      <div>{monsters.toString()}</div>
-      {
-      monsters.length>0? 
-        <MonsterCard monsterDetail={monsters[0]}></MonsterCard>
-      :
-      <div></div>
-      }
+        <MainPage></MainPage>
 
     </main>
   );

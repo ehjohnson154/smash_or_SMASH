@@ -1,6 +1,5 @@
 import { Monster } from "@/types/monster";
 import { NextApiRequest, NextApiResponse } from "next"
-
 import { delay } from "../../assets/delay";
 
 // const dogImageApi = "https://dog.ceo/api/breeds/image/random";
@@ -9,15 +8,26 @@ import { delay } from "../../assets/delay";
 
 const allMonsterAPI = "https://www.dnd5eapi.co/api/monsters"
 const indexMonsterAPI = "https://www.dnd5eapi.co/api/monsters/"
+const blankPicture = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
 
-export default async function handler(
+// export default async function handler(
+//     req: NextApiRequest,
+//     res: NextApiResponse<{monsters: Monster[]}>
+//   ) {
+//     const monsterArray: Monster[] = await getMonsters(1);
+
+//     console.log(monsterArray)
+//     res.status(200).json({ monsters: monsterArray })
+//   }
+
+  export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<{monsters: Monster[]}>
+    res: NextApiResponse<{monster: Monster}>
   ) {
     const monsterArray: Monster[] = await getMonsters(1);
 
     console.log(monsterArray)
-    res.status(200).json({ monsters: monsterArray })
+    res.status(200).json({ monster: monsterArray[0] })
   }
 
 
@@ -33,7 +43,7 @@ export async function getAllMonster(){
 export async function getRandomMonster(){
     console.log("get random monster")
     const jsonMonsterList = await getAllMonster();
-    console.log(jsonMonsterList)
+    //console.log(jsonMonsterList)
     const monsterListCount = await jsonMonsterList.count;
     const randInt = getRandomInt(monsterListCount)
     const randomMonster = jsonMonsterList.results[randInt].index
@@ -41,6 +51,11 @@ export async function getRandomMonster(){
 
     const IndexMonsterResponse = await fetch((indexMonsterAPI + randomMonster));
     const IndexMonsterJson = await IndexMonsterResponse.json();
+    var monsterImage =  null;
+    if (IndexMonsterJson.image != null){
+        monsterImage = "https://www.dnd5eapi.co" + IndexMonsterJson.image
+    }
+
     
 
     const monster: Monster = {
@@ -50,7 +65,7 @@ export async function getRandomMonster(){
         type: IndexMonsterJson.type,
         alignment: IndexMonsterJson.alignment,
         cr: IndexMonsterJson.challenge_rating,
-        image: IndexMonsterJson.image ?? null 
+        image: monsterImage ?? blankPicture
     }
     
     return monster;
